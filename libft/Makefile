@@ -12,7 +12,9 @@
 
 NAME = libft.a
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Wno-empty-body -Wno-unused -Wextra
+
+# FLAGS = -Wall -Werror -Wextra
 
 SRC = ft_memcmp.c \
 	  ft_strclr.c \

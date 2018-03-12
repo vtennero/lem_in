@@ -12,7 +12,9 @@
 
 NAME = lem-in
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Wno-empty-body -Wno-unused -Wextra
+
+# FLAGS = -Wall -Werror -Wextra
 
 SANITIZE = -g3 -fsanitize=address
 

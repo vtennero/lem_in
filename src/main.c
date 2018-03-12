@@ -14,14 +14,16 @@
 
 int		main(void)
 {
-	char	*line;
+	char		*line;
+	t_lem		params;
 
 	line = NULL;
+	params.start = NULL;
 	while (get_next_line(0, &line) == 1)
 	{
-		if (set_ant(line) == 1)
+		if (set_ant(line, &params) == 1)
 			ft_printf("ant set\n");
-		else if (set_start(line) == 1)
+		else if (set_start(line, &params) == 1)
 			ft_printf("start set\n");
 		else if (is_comment(line) == 1)
 			ft_printf("comment\n");

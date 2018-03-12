@@ -15,11 +15,20 @@
 
 # include "../libft/libft.h"
 
+typedef struct		s_lem
+{
+	int				ants;
+	char*			start;
+	char*			end;
+	int				rooms;
+	int				links;
+}					t_lem;
+
 /*
 ** ------------------------- PARSER -------------------------
 */
-int			set_ant(char *line);
-int			set_start(char *line);
+int			set_ant(char *line, t_lem *params);
+int			set_start(char *line, t_lem *params);
 int			is_comment(char *line);
 int			set_room(char *line);
 int			set_end(char *line);
