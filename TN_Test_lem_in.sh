@@ -21,9 +21,11 @@ while [ $counter -le $n ]
 		# ./lem_in tests/test$counter
 		./lem_in < tests/test$counter > tests/logs/test$counter
 		# grep -r "ERROR" tests/logs/test$counter
-		if ! grep -r "ERROR" tests/logs/test$counter > /dev/null;
+		# if ! grep -r "ERROR" tests/logs/test$counter > /dev/null;
+		if grep -r "ALL CLEAR" tests/logs/test$counter > /dev/null;
+		# if ! diff -u tests/error tests/logs/test$counter > /dev/null;
 			then
-				printf "$COLOR\0test$counter:\t\tBOOM 🔥\n$END"
+				printf "$COLOR\0test$counter:   \tBOOM 🔥\n$END"
 				# cat tests/logs/test$counter
 				# say BOOM
 				failed=$((failed+1))

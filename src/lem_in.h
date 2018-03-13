@@ -27,11 +27,11 @@ typedef struct		s_lem
 /*
 ** ------------------------- PARSER -------------------------
 */
-int			set_ant(char *line, t_lem *params);
+int			set_ant(t_lem *params);
 int			set_start(char *line, t_lem *params);
 int			is_comment(char *line);
 int			set_room(char *line);
-int			set_end(char *line);
+int			set_end(char *line, t_lem *params);
 int			set_link(char *line);
 /*
 ** ------------------------- SOLVER -------------------------

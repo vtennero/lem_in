@@ -12,33 +12,72 @@
 
 #include "lem_in.h"
 
+int		check_params(t_lem *params)
+{
+	ft_printf("start : %s\n", params->start);
+	ft_printf("end : %s\n", params->end);
+	ft_printf("ants : %d\n", params->ants);
+	if (!params->start)
+		return (0);
+	if (!params->end)
+		return (0);
+	if (!params->ants)
+		return (0);
+	// if (!params->rooms)
+	// if (!params->start)
+	return (1);
+}
+
+void	init_params(t_lem *params)
+{
+	params->start = NULL;
+	params->end = NULL;
+	params->ants = 0;
+	params->rooms = 0;
+	params->links = 0;
+}
+
 int		main(void)
 {
 	char		*line;
-	t_lem		params;
+	t_lem		*params;
 
 	line = NULL;
-	params.start = NULL;
+	params = (t_lem *)malloc(sizeof(t_lem));
+	init_params(params);
+	if (set_ant(params) == 0)
+	{
+		ft_printf("ERROR\n");
+		free(line);
+		return (0);
+	}
+	else
+	{
+		free(line);
+		ft_printf("ant set\n");
+	}
 	while (get_next_line(0, &line) == 1)
 	{
-		if (set_ant(line, &params) == 1)
-			ft_printf("ant set\n");
-		else if (set_start(line, &params) == 1)
+		if (set_start(line, params) == 1)
 			ft_printf("start set\n");
+		else if (set_end(line, params) == 1)
+			ft_printf("end set\n");
 		else if (is_comment(line) == 1)
 			ft_printf("comment\n");
 		else if (set_room(line) == 1)
 			ft_printf("room set\n");
-		else if (set_end(line) == 1)
-			ft_printf("end set\n");
 		else if (set_link(line) == 1)
 			ft_printf("link set\n");
 		else
-		{
-			ft_printf("ERROR\n");
-			break ;
-		}
+			{
+				ft_printf("ERROR\n");
+				return(0) ;
+			}
+		free(line);
 	}
-	ft_printf("ERROR\n");
+	if (check_params(params) == 1)
+		ft_printf("ALL CLEAR\n");
+	else
+		ft_printf("ERROR\n");
 	return (0);
 }
