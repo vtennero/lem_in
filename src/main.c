@@ -35,20 +35,31 @@ void	init_params(t_lem *params)
 	params->ants = 0;
 	params->rooms = 0;
 	params->links = 0;
+	params->graph = NULL;
+}
+
+void	free_params(t_lem *params)
+{
+	// ft_memdel(params);
+	free(params);
+	params = NULL;
 }
 
 int		main(void)
 {
 	char		*line;
 	t_lem		*params;
+	t_node		*graph;
 
 	line = NULL;
+	graph = NULL;
 	params = (t_lem *)malloc(sizeof(t_lem));
 	init_params(params);
 	if (set_ant(params) == 0)
 	{
 		ft_printf("ERROR\n");
 		free(line);
+		free_params(params);
 		return (0);
 	}
 	else
@@ -64,20 +75,22 @@ int		main(void)
 			ft_printf("end set\n");
 		else if (is_comment(line) == 1)
 			ft_printf("comment\n");
-		else if (set_room(line) == 1)
+		else if ((graph = set_room(line)))
 			ft_printf("room set\n");
 		else if (set_link(line) == 1)
 			ft_printf("link set\n");
 		else
 			{
-				ft_printf("ERROR\n");
-				return(0) ;
+				ft_printf("FUNCTION ERROR on %s\n", line);
+				free_params(params);
+				return(0);
 			}
 		free(line);
 	}
 	if (check_params(params) == 1)
 		ft_printf("ALL CLEAR\n");
 	else
-		ft_printf("ERROR\n");
+		ft_printf("PARAMS ERROR\n");
+	free_params(params);
 	return (0);
 }

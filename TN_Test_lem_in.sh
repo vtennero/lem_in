@@ -9,6 +9,8 @@ n=110
 passed=0
 failed=0
 
+source valgrind_lem_in.sh
+
 clear
 echo "$COLOR\0TN_TEST // LEM_IN$END"
 sleep 1
@@ -37,6 +39,10 @@ while [ $counter -le $n ]
 	# passed=$[n-failed]
 printf "$(expr $n - $failed)/$n tests passed\n$END"
 # printf "$COLOR$passed/$n tests passed\n$END"
+read -p "Press enter to continue..."
+clear
+echo "$COLOR\0TN_TEST // LEM_IN$END"
+check_valgrind $n
 
 mv lem_in "lem-in"
 

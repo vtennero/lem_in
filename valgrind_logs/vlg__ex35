@@ -1,0 +1,53 @@
+==38579== Memcheck, a memory error detector
+==38579== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==38579== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==38579== Command: ./lem_in /test35
+==38579== Parent PID: 37728
+==38579== 
+==38579== Syscall param msg->desc.port.name points to uninitialised byte(s)
+==38579==    at 0x1003B134A: mach_msg_trap (in /usr/lib/system/libsystem_kernel.dylib)
+==38579==    by 0x1003B0796: mach_msg (in /usr/lib/system/libsystem_kernel.dylib)
+==38579==    by 0x1003AA485: task_set_special_port (in /usr/lib/system/libsystem_kernel.dylib)
+==38579==    by 0x10054610E: _os_trace_create_debug_control_port (in /usr/lib/system/libsystem_trace.dylib)
+==38579==    by 0x100546458: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
+==38579==    by 0x1000AF9DF: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==38579==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==38579==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==38579==    by 0x10001B4A9: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==38579==    by 0x10001B440: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==38579==    by 0x10001A523: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==38579==    by 0x10001A5B8: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==38579==  Address 0x104892d8c is on thread 1's stack
+==38579==  in frame #2, created by task_set_special_port (???:)
+==38579== 
+==38579== 
+==38579== HEAP SUMMARY:
+==38579==     in use at exit: 18,159 bytes in 162 blocks
+==38579==   total heap usage: 183 allocs, 21 frees, 24,359 bytes allocated
+==38579== 
+==38579== 72 bytes in 3 blocks are possibly lost in loss record 26 of 42
+==38579==    at 0x1000A10B2: calloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==38579==    by 0x1005BA832: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==38579==    by 0x1005CDD6A: map_images (in /usr/lib/libobjc.A.dylib)
+==38579==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==38579==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==38579==    by 0x10020800A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==38579==    by 0x1005BA072: _objc_init (in /usr/lib/libobjc.A.dylib)
+==38579==    by 0x10019B68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==38579==    by 0x10019B63A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==38579==    by 0x1000AF9D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==38579==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==38579==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==38579== 
+==38579== LEAK SUMMARY:
+==38579==    definitely lost: 0 bytes in 0 blocks
+==38579==    indirectly lost: 0 bytes in 0 blocks
+==38579==      possibly lost: 72 bytes in 3 blocks
+==38579==    still reachable: 200 bytes in 6 blocks
+==38579==         suppressed: 17,887 bytes in 153 blocks
+==38579== Reachable blocks (those to which a pointer was found) are not shown.
+==38579== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==38579== 
+==38579== For counts of detected and suppressed errors, rerun with: -v
+==38579== Use --track-origins=yes to see where uninitialised values come from
+==38579== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 12 from 12)

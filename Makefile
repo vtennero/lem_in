@@ -19,7 +19,8 @@ FLAGS = -Wall -Wno-empty-body -Wno-unused -Wextra
 SANITIZE = -g3 -fsanitize=address
 
 SRC = main.c \
-		parser.c
+		parser.c \
+		graph_creator.c
 
 PSRC = $(addprefix src/, $(SRC))
 

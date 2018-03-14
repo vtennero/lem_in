@@ -34,7 +34,7 @@ int			set_ant(t_lem *params)
 			i++;
 		}
 		free(line);
-		ft_printf("i %d ants %d\n", i, params->ants);
+		// ft_printf("i %d ants %d\n", i, params->ants);
 		return (1);
 	}
 	free(line);
@@ -61,47 +61,62 @@ int			parse_coord(char *str, int len)
 	int		coord;
 
 	i = 0;
+	coord = 0;
+	// ft_printf("coord from |%s| with len = %d\n", str, len);
+	if (len < 1)
+		return (-1);
 	while (i < len)
 	{
-		if (!(*str) || !(ft_isdigit(*str) == 1))
+		if (!(ft_isdigit(str[i]) == 1))
 			return(-1);
-		coord = str[i++] + '0' + 10 *coord;
+		coord = 10 * coord + str[i++] - '0';
 	}
 	// ft_printf("coord read = %d\n", coord);
 	return (coord);
 }
 
-int			is_room(char *str)
+int			is_room(char *str, int *x, int *y)
 {
 	int		i;
 	int		x_space;
 	int		y_space;
-	int		x;
-	int		y;
 
 	i = 0;
 	x_space = ft_char_pos(str, ' ');
-	y_space = ft_char_pos(str + x_space + 1, ' ');
+	y_space = ft_char_pos(str + x_space + 1, ' ') + x_space + 1;
 	// ft_printf("x_space = %d\n", x_space);
 	// ft_printf("y_space = %d\n", y_space);
 	if (x_space == -1 || y_space == -1)
-		return (0);
-	x = parse_coord(str + x_space, y_space - (x_space + 1));
-	y = parse_coord(str + y_space, ft_char_pos(str, '\0') - (y_space + 1));
-	if (x == -1 || y == -1)
-		return (0);
-	// ft_printf("x = %d y = %d\n", x, y);
+	{
+			// ft_printf("faulty string = %s\n", str);
+			return (0);
+	}
+	*x = parse_coord(str + x_space + 1, y_space - (x_space + 1));
+	*y = parse_coord(str + y_space + 1, ft_strlen(str + y_space + 1));
+	if (*x == -1 || *y == -1)
+		{
+			// ft_printf("faulty string = %s\n", str);
+			return (0);
+		}
+	ft_printf("x = %d y = %d\n", *x, *y);
 	return (1);
 }
 
 int			is_start_room(t_lem *params)
 {
 	char	*line;
+	int		x;
+	int		y;
 
 	line = NULL;
 	if (!(get_next_line(0, &line) == 1))
 		return (0);
-	if (is_room(line))
+	if (is_comment(line))
+	{
+		free(line);
+		return (is_start_room(params));
+	}
+	if (is_room(line, &x, &y))
 	{
 		params->start = ft_strndup(line, ft_char_pos(line, ' '));
 		return (1);
@@ -112,12 +127,19 @@ int			is_start_room(t_lem *params)
 int			is_end_room(t_lem *params)
 {
 	char	*line;
+	int		x;
+	int		y;
 
 	line = NULL;
 	if (!(get_next_line(0, &line) == 1))
 		return (0);
 	// ft_printf("////////////////////////%s\n", line);
-	if (is_room(line))
+	if (is_comment(line))
+	{
+		free(line);
+		return (is_end_room(params));
+	}
+	if (is_room(line, &x, &y))
 	{
 		params->end = ft_strndup(line, ft_char_pos(line, ' '));
 		return (1);
@@ -143,10 +165,21 @@ int			is_comment(char *line)
 	return (0);
 }
 
-int			set_room(char *line)
+t_node		*set_room(char *line)
 {
-	if (is_room(line))
-		return (1);
+	t_node		*start;
+	t_node		*new;
+	int			x;
+	int			y;
+
+	start = NULL;
+	new = NULL;
+	if (is_room(line, &x, &y))
+	{
+		new = create_node(x, y, "room");
+		start = pushback_node(start, new);
+		return (start);
+	}
 	return (0);
 }
 
@@ -163,14 +196,52 @@ int			set_end(char *line, t_lem *params)
 	return (0);
 }
 
+static int	check_for_diff_name(char *str, int dash)
+{
+	char	*room_one;
+	char	*room_two;
+	int		result;
+
+	result = 1;
+	room_one = ft_strndup(str, dash);
+	room_two = ft_strdup(str + dash + 1);
+	// ft_printf("room one %s room two %s\n", room_one, room_two);
+	if (room_one && room_two)
+	{
+		if (ft_strcmp(room_one, room_two) == 0)
+			result = 0;
+	// ft_printf("%d\n", ft_strcmp(room_one, room_two));
+	free(room_one);
+	free(room_two);
+	}
+	return (result);
+}
+
+int			check_link_format(char *str, int dash)
+{
+	int		i;
+	int		len;
+
+	i = 0;
+	len = ft_strlen(str);
+	while (i < len)
+	{
+		if (i != dash && ft_isdigit(str[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int			set_link(char *line)
 {
 	int		dash;
 
+	// ft_printf("////////////////////////%s\n", line);
 	dash = ft_char_pos(line, '-');
-	if (dash == -1)
+	// ft_printf("dash = %d\n", dash);
+	// if (!(dash == -1) && (check_for_diff_name(line, dash)))
+	if (dash == -1 || (check_for_diff_name(line, dash) == 0) || check_link_format(line, dash) == 0)
 		return (0);
-	if (ft_strncmp(line, line + dash + 1, dash))
-		return (1);
-	return (0);
+	return (1);
 }
