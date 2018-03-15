@@ -1,0 +1,85 @@
+==65465== Memcheck, a memory error detector
+==65465== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==65465== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==65465== Command: ./lem_in
+==65465== Parent PID: 64764
+==65465== 
+==65465== Syscall param msg->desc.port.name points to uninitialised byte(s)
+==65465==    at 0x1003B134A: mach_msg_trap (in /usr/lib/system/libsystem_kernel.dylib)
+==65465==    by 0x1003B0796: mach_msg (in /usr/lib/system/libsystem_kernel.dylib)
+==65465==    by 0x1003AA485: task_set_special_port (in /usr/lib/system/libsystem_kernel.dylib)
+==65465==    by 0x10054610E: _os_trace_create_debug_control_port (in /usr/lib/system/libsystem_trace.dylib)
+==65465==    by 0x100546458: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
+==65465==    by 0x1000AF9DF: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==65465==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==65465==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==65465==    by 0x10001B4A9: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==65465==    by 0x10001B440: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==65465==    by 0x10001A523: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==65465==    by 0x10001A5B8: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==65465==  Address 0x104892d8c is on thread 1's stack
+==65465==  in frame #2, created by task_set_special_port (???:)
+==65465== 
+==65465== 
+==65465== HEAP SUMMARY:
+==65465==     in use at exit: 18,554 bytes in 191 blocks
+==65465==   total heap usage: 329 allocs, 138 frees, 26,064 bytes allocated
+==65465== 
+==65465== 2 bytes in 1 blocks are definitely lost in loss record 1 of 49
+==65465==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==65465==    by 0x100002274: ft_strdup (in ./lem_in)
+==65465==    by 0x100001C03: set_room (in ./lem_in)
+==65465==    by 0x10000114E: main (in ./lem_in)
+==65465== 
+==65465== 2 bytes in 1 blocks are definitely lost in loss record 2 of 49
+==65465==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==65465==    by 0x100002726: ft_strndup (in ./lem_in)
+==65465==    by 0x1000014B5: is_valid_link (in ./lem_in)
+==65465==    by 0x1000013C0: set_link (in ./lem_in)
+==65465==    by 0x10000117E: main (in ./lem_in)
+==65465== 
+==65465== 2 bytes in 1 blocks are definitely lost in loss record 3 of 49
+==65465==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==65465==    by 0x100002274: ft_strdup (in ./lem_in)
+==65465==    by 0x1000014D0: is_valid_link (in ./lem_in)
+==65465==    by 0x1000013C0: set_link (in ./lem_in)
+==65465==    by 0x10000117E: main (in ./lem_in)
+==65465== 
+==65465== 72 bytes in 3 blocks are possibly lost in loss record 30 of 49
+==65465==    at 0x1000A10B2: calloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==65465==    by 0x1005BA832: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==65465==    by 0x1005CDD6A: map_images (in /usr/lib/libobjc.A.dylib)
+==65465==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==65465==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==65465==    by 0x10020800A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==65465==    by 0x1005BA072: _objc_init (in /usr/lib/libobjc.A.dylib)
+==65465==    by 0x10019B68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==65465==    by 0x10019B63A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==65465==    by 0x1000AF9D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==65465==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==65465==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==65465== 
+==65465== 95 bytes in 12 blocks are definitely lost in loss record 31 of 49
+==65465==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==65465==    by 0x100002395: ft_strjoin (in ./lem_in)
+==65465==    by 0x100000F9A: save_instructions (in ./lem_in)
+==65465==    by 0x1000010AD: main (in ./lem_in)
+==65465== 
+==65465== 294 (40 direct, 254 indirect) bytes in 1 blocks are definitely lost in loss record 41 of 49
+==65465==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==65465==    by 0x100001DB0: create_node (in ./lem_in)
+==65465==    by 0x100001B86: set_room (in ./lem_in)
+==65465==    by 0x10000114E: main (in ./lem_in)
+==65465== 
+==65465== LEAK SUMMARY:
+==65465==    definitely lost: 141 bytes in 16 blocks
+==65465==    indirectly lost: 254 bytes in 13 blocks
+==65465==      possibly lost: 72 bytes in 3 blocks
+==65465==    still reachable: 200 bytes in 6 blocks
+==65465==         suppressed: 17,887 bytes in 153 blocks
+==65465== Reachable blocks (those to which a pointer was found) are not shown.
+==65465== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==65465== 
+==65465== For counts of detected and suppressed errors, rerun with: -v
+==65465== Use --track-origins=yes to see where uninitialised values come from
+==65465== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 12 from 12)

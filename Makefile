@@ -19,7 +19,10 @@ FLAGS = -Wall -Wno-empty-body -Wno-unused -Wextra
 SANITIZE = -g3 -fsanitize=address
 
 SRC = main.c \
-		parser.c \
+		parser_links.c \
+		parser_ants.c \
+		parser_com.c \
+		parser_rooms.c \
 		graph_creator.c
 
 PSRC = $(addprefix src/, $(SRC))
@@ -31,7 +34,8 @@ all: $(NAME)
 $(NAME):
 	@ make -C libft/
 	@ gcc -c $(FLAGS) $(PSRC) -I src/
-	@ gcc $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
+	@ gcc -g $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
+	# @ gcc $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
 
 clean:
 	@ /bin/rm -f $(OBJ)

@@ -5,15 +5,15 @@ VALGRIND_LOGS_FILENAME="vlg_"
 
 check_one_valgrind()
 {
-	local STORAGE_PATH=$VALGRIND_LOGS_DIR"/"$VALGRIND_LOGS_FILENAME"_ex"$1
+	local STORAGE_PATH=$VALGRIND_LOGS_DIR"/"$VALGRIND_LOGS_FILENAME"_test"$1
 	local TESTS_PATH=$TESTS_ABSOLUTE_PATH/test$1
 
-	$HOME/.brew/Cellar/valgrind/3.13.0/bin/valgrind --leak-check=full --log-file="$STORAGE_PATH" ./lem_in $TESTS_PATH > /dev/null
+	$HOME/.brew/Cellar/valgrind/3.13.0/bin/valgrind --leak-check=full --log-file="$STORAGE_PATH" ./lem_in < tests/test$1 > /dev/null
 	local definitely_lb=$(cat $STORAGE_PATH | grep "definitely lost: " | cut -d " " -f7)
 	local indirectly_lb=$(cat $STORAGE_PATH | grep "indirectly lost: " | cut -d " " -f7)
 	if [ "$definitely_lb" != "0" ] || [ "$indirectly_lb" != "0" ]
 	then
-		printf "\ntest_gnl$2, test$1: \t$definitely_lb bytes definitely lost, $indirectly_lb bytes indirectly lost"
+		printf "\ntest$1:   \t$definitely_lb bytes definitely lost, $indirectly_lb bytes indirectly lost"
 		# say boom
 	else
 		printf "$COLOR.$END"

@@ -21,6 +21,27 @@ t_node			*free_node(t_node *node)
 	return (0);
 }
 
+void			print_nodes(t_node *node)
+{
+	ft_printf("PRINT NODES\n");
+	while (node)
+	{
+		ft_printf("%s\n", node->name);
+		node = node->next;
+	}
+}
+
+t_node			*fetch_node(t_node *node, char *name)
+{
+	while (node)
+	{
+		if (ft_strcmp(name, node->name) == 0)
+			return (node);
+		node = node->next;
+	}
+	return (0);
+}
+
 t_node			*create_node(int x, int y, char *name)
 {
 	t_node		*new_node;
@@ -28,13 +49,15 @@ t_node			*create_node(int x, int y, char *name)
 	new_node = (t_node *)malloc(sizeof(t_node));
 	if (new_node)
 	{
-		if (!(new_node->name = ft_strdup(name)))
-			return (free_node(new_node));
+		// if (!(new_node->name = ft_strdup(name)))
+			// return (free_node(new_node));
+		new_node->name = name;
 		new_node->visited = 0;
 		new_node->coord.x = x;
 		new_node->coord.y = y;
 		new_node->next = NULL;
-		ft_printf("new node: %s x = %d y = %d\n", new_node->name, new_node->coord.x, new_node->coord.y);
+		new_node->edges = NULL;
+		// ft_printf("new node: %s x = %d y = %d\n", new_node->name, new_node->coord.x, new_node->coord.y);
 	}
 	return (new_node);
 }
@@ -46,6 +69,7 @@ t_node			*pushback_node(t_node *start, t_node *new)
 	tmp = NULL;
 	if (!start)
 		return (new);
+	// ft_printf("start->name = |%s|\n", start->name);
 	if (new)
 	{
 		tmp = start;
@@ -53,6 +77,7 @@ t_node			*pushback_node(t_node *start, t_node *new)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
+	// ft_printf("after :start->name = |%s|\n", start->name);
 	return (start);
 }
 /*

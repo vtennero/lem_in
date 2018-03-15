@@ -1,0 +1,29 @@
+ant set
+room set
+room set
+comment
+room set
+room set
+nextline is end
+room set
+room set
+nextline is start
+room set
+room set
+link set
+link set
+link set
+link set
+link set
+link set
+comment
+link set
+link set
+link set
+link set
+link set
+link set
+start : 7
+end : 5
+ants : 2
+ALL CLEAR

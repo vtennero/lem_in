@@ -1,21 +1,16 @@
 ant set
-x = 23 y = 3
-start set
-x = 16 y = 7
+nextline is start
+room set
 room set
 comment
-x = 16 y = 3
 room set
-x = 16 y = 5
 room set
-x = 9 y = 3
 room set
-x = 1 y = 5
 room set
-x = 4 y = 8
 room set
-x = 9 y = 5
-end set
+nextline is end
+comment
+room set
 link set
 link set
 link set

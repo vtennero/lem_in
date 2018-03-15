@@ -5,7 +5,7 @@ COLOR=
 END=
 # END='\x1b[0m'
 counter=1
-n=110
+n=117
 passed=0
 failed=0
 
@@ -39,6 +39,7 @@ while [ $counter -le $n ]
 	# passed=$[n-failed]
 printf "$(expr $n - $failed)/$n tests passed\n$END"
 # printf "$COLOR$passed/$n tests passed\n$END"
+
 read -p "Press enter to continue..."
 clear
 echo "$COLOR\0TN_TEST // LEM_IN$END"
