@@ -1,103 +1,67 @@
-==66246== Memcheck, a memory error detector
-==66246== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==66246== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==66246== Command: ./lem_in
-==66246== Parent PID: 64764
-==66246== 
-==66246== Syscall param msg->desc.port.name points to uninitialised byte(s)
-==66246==    at 0x1003B134A: mach_msg_trap (in /usr/lib/system/libsystem_kernel.dylib)
-==66246==    by 0x1003B0796: mach_msg (in /usr/lib/system/libsystem_kernel.dylib)
-==66246==    by 0x1003AA485: task_set_special_port (in /usr/lib/system/libsystem_kernel.dylib)
-==66246==    by 0x10054610E: _os_trace_create_debug_control_port (in /usr/lib/system/libsystem_trace.dylib)
-==66246==    by 0x100546458: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
-==66246==    by 0x1000AF9DF: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==66246==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==66246==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==66246==    by 0x10001B4A9: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==66246==    by 0x10001B440: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==66246==    by 0x10001A523: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==66246==    by 0x10001A5B8: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
-==66246==  Address 0x104892d8c is on thread 1's stack
-==66246==  in frame #2, created by task_set_special_port (???:)
-==66246== 
-==66246== 
-==66246== HEAP SUMMARY:
-==66246==     in use at exit: 18,739 bytes in 242 blocks
-==66246==   total heap usage: 423 allocs, 181 frees, 27,710 bytes allocated
-==66246== 
-==66246== 2 bytes in 1 blocks are definitely lost in loss record 1 of 52
-==66246==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x100002274: ft_strdup (in ./lem_in)
-==66246==    by 0x100001C03: set_room (in ./lem_in)
-==66246==    by 0x10000114E: main (in ./lem_in)
-==66246== 
-==66246== 2 bytes in 1 blocks are definitely lost in loss record 2 of 52
-==66246==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x100002274: ft_strdup (in ./lem_in)
-==66246==    by 0x100001C3D: set_room (in ./lem_in)
-==66246==    by 0x10000114E: main (in ./lem_in)
-==66246== 
-==66246== 20 bytes in 10 blocks are definitely lost in loss record 6 of 52
-==66246==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x100002726: ft_strndup (in ./lem_in)
-==66246==    by 0x1000014B5: is_valid_link (in ./lem_in)
-==66246==    by 0x1000013C0: set_link (in ./lem_in)
-==66246==    by 0x10000117E: main (in ./lem_in)
-==66246== 
-==66246== 20 bytes in 10 blocks are definitely lost in loss record 7 of 52
-==66246==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x100002274: ft_strdup (in ./lem_in)
-==66246==    by 0x1000014D0: is_valid_link (in ./lem_in)
-==66246==    by 0x1000013C0: set_link (in ./lem_in)
-==66246==    by 0x10000117E: main (in ./lem_in)
-==66246== 
-==66246== 20 bytes in 10 blocks are definitely lost in loss record 8 of 52
-==66246==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x100002726: ft_strndup (in ./lem_in)
-==66246==    by 0x10000141A: set_link (in ./lem_in)
-==66246==    by 0x10000117E: main (in ./lem_in)
-==66246== 
-==66246== 20 bytes in 10 blocks are definitely lost in loss record 9 of 52
-==66246==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x100002274: ft_strdup (in ./lem_in)
-==66246==    by 0x100001435: set_link (in ./lem_in)
-==66246==    by 0x10000117E: main (in ./lem_in)
-==66246== 
-==66246== 72 bytes in 3 blocks are possibly lost in loss record 33 of 52
-==66246==    at 0x1000A10B2: calloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x1005BA832: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==66246==    by 0x1005CDD6A: map_images (in /usr/lib/libobjc.A.dylib)
-==66246==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==66246==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==66246==    by 0x10020800A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==66246==    by 0x1005BA072: _objc_init (in /usr/lib/libobjc.A.dylib)
-==66246==    by 0x10019B68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==66246==    by 0x10019B63A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
-==66246==    by 0x1000AF9D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==66246==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==66246==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==66246== 
-==66246== 160 bytes in 22 blocks are definitely lost in loss record 36 of 52
-==66246==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x100002395: ft_strjoin (in ./lem_in)
-==66246==    by 0x100000F9A: save_instructions (in ./lem_in)
-==66246==    by 0x1000010AD: main (in ./lem_in)
-==66246== 
-==66246== 336 (40 direct, 296 indirect) bytes in 1 blocks are definitely lost in loss record 45 of 52
-==66246==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==66246==    by 0x100001DB0: create_node (in ./lem_in)
-==66246==    by 0x100001B86: set_room (in ./lem_in)
-==66246==    by 0x10000114E: main (in ./lem_in)
-==66246== 
-==66246== LEAK SUMMARY:
-==66246==    definitely lost: 284 bytes in 65 blocks
-==66246==    indirectly lost: 296 bytes in 15 blocks
-==66246==      possibly lost: 72 bytes in 3 blocks
-==66246==    still reachable: 200 bytes in 6 blocks
-==66246==         suppressed: 17,887 bytes in 153 blocks
-==66246== Reachable blocks (those to which a pointer was found) are not shown.
-==66246== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==66246== 
-==66246== For counts of detected and suppressed errors, rerun with: -v
-==66246== Use --track-origins=yes to see where uninitialised values come from
-==66246== ERROR SUMMARY: 10 errors from 10 contexts (suppressed: 12 from 12)
+==49056== Memcheck, a memory error detector
+==49056== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==49056== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==49056== Command: ./lem_in
+==49056== Parent PID: 47535
+==49056== 
+==49056== Syscall param msg->desc.port.name points to uninitialised byte(s)
+==49056==    at 0x1003B134A: mach_msg_trap (in /usr/lib/system/libsystem_kernel.dylib)
+==49056==    by 0x1003B0796: mach_msg (in /usr/lib/system/libsystem_kernel.dylib)
+==49056==    by 0x1003AA485: task_set_special_port (in /usr/lib/system/libsystem_kernel.dylib)
+==49056==    by 0x10054610E: _os_trace_create_debug_control_port (in /usr/lib/system/libsystem_trace.dylib)
+==49056==    by 0x100546458: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
+==49056==    by 0x1000AF9DF: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==49056==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==49056==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==49056==    by 0x10001B4A9: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==49056==    by 0x10001B440: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==49056==    by 0x10001A523: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==49056==    by 0x10001A5B8: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==49056==  Address 0x104892d8c is on thread 1's stack
+==49056==  in frame #2, created by task_set_special_port (???:)
+==49056== 
+==49056== 
+==49056== HEAP SUMMARY:
+==49056==     in use at exit: 18,815 bytes in 198 blocks
+==49056==   total heap usage: 1,041 allocs, 843 frees, 34,497 bytes allocated
+==49056== 
+==49056== 72 bytes in 3 blocks are possibly lost in loss record 27 of 48
+==49056==    at 0x1000A10B2: calloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==49056==    by 0x1005BA832: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==49056==    by 0x1005CDD6A: map_images (in /usr/lib/libobjc.A.dylib)
+==49056==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==49056==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==49056==    by 0x10020800A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==49056==    by 0x1005BA072: _objc_init (in /usr/lib/libobjc.A.dylib)
+==49056==    by 0x10019B68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==49056==    by 0x10019B63A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==49056==    by 0x1000AF9D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==49056==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==49056==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==49056== 
+==49056== 176 (64 direct, 112 indirect) bytes in 4 blocks are definitely lost in loss record 34 of 48
+==49056==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==49056==    by 0x1000010CA: create_edge (in ./lem_in)
+==49056==    by 0x10000115A: assign_edge (in ./lem_in)
+==49056==    by 0x10000138D: set_link (in ./lem_in)
+==49056==    by 0x100000FBE: main (in ./lem_in)
+==49056== 
+==49056== 480 (48 direct, 432 indirect) bytes in 3 blocks are definitely lost in loss record 42 of 48
+==49056==    at 0x1000A0A46: malloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==49056==    by 0x1000010CA: create_edge (in ./lem_in)
+==49056==    by 0x10000115A: assign_edge (in ./lem_in)
+==49056==    by 0x10000139D: set_link (in ./lem_in)
+==49056==    by 0x100000FBE: main (in ./lem_in)
+==49056== 
+==49056== LEAK SUMMARY:
+==49056==    definitely lost: 112 bytes in 7 blocks
+==49056==    indirectly lost: 544 bytes in 29 blocks
+==49056==      possibly lost: 72 bytes in 3 blocks
+==49056==    still reachable: 200 bytes in 6 blocks
+==49056==         suppressed: 17,887 bytes in 153 blocks
+==49056== Reachable blocks (those to which a pointer was found) are not shown.
+==49056== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==49056== 
+==49056== For counts of detected and suppressed errors, rerun with: -v
+==49056== Use --track-origins=yes to see where uninitialised values come from
+==49056== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 12 from 12)

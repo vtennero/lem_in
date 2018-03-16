@@ -42,7 +42,13 @@ void	init_params(t_lem *params)
 
 void	free_params(t_lem *params)
 {
-	// ft_memdel(params);
+	// ft_memdel(&params);
+
+	free(params->start);
+	params->start = NULL;
+	free(params->end);
+	params->end = NULL;
+	free_node(params->graph);
 	free(params);
 	params = NULL;
 }
@@ -56,7 +62,7 @@ char*		save_instructions(char *buf, char *new, int i)
 	if (i == 1)
 		instructions = ft_strjoin_clr(new, "\n", 0);
 	else
-		instructions = ft_strjoin_clr(buf, ft_strjoin(new, "\n"), 0);
+		instructions = ft_strjoin_clr(buf, ft_strjoin(new, "\n"), 2);
 	return (instructions);
 }
 
@@ -126,6 +132,7 @@ int		main(void)
 	else
 		ft_printf("PARAMS ERROR\n");
 	free_params(params);
+	print_nodes(graph);
 	free(buf);
 	return (0);
 }

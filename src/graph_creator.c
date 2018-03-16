@@ -14,19 +14,34 @@
 
 t_node			*free_node(t_node *node)
 {
-	free(node->name);
-	node->name = NULL;
-	free(node);
-	node = NULL;
+	t_node		*tmp;
+
+	tmp = node;
+	while(tmp)
+	{
+		tmp = node->next;
+		free(node->name);
+		node->name = NULL;
+		free(node->edges);
+		node->edges = NULL;
+		free(node);
+		node = NULL;
+	}
 	return (0);
 }
 
 void			print_nodes(t_node *node)
 {
-	ft_printf("PRINT NODES\n");
+	ft_printf("PRINT NODES & EDGES\n");
 	while (node)
 	{
-		ft_printf("%s\n", node->name);
+		ft_printf("Node %s connected to: ", node->name);
+		while (node->edges != NULL)
+		{
+			ft_printf("%s ", node->edges->connection->name);
+			node->edges = node->edges->next;
+		}
+		ft_printf("\n");
 		node = node->next;
 	}
 }

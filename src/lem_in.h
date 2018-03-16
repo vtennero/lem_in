@@ -55,8 +55,6 @@ int					is_comment(char *line);
 int					set_room(char *line, t_lem *params, int *mod, t_node **graph);
 int					set_end(char *line, t_lem *params, int *mod);
 int					set_link(char *line, t_lem *params, t_node *node);
-
-
 /*
  ** ------------------------- SOLVER -------------------------
  */

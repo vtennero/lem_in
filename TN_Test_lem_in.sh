@@ -6,6 +6,7 @@ END=
 # END='\x1b[0m'
 counter=1
 n=117
+p=12
 passed=0
 failed=0
 
@@ -43,7 +44,7 @@ printf "$(expr $n - $failed)/$n tests passed\n$END"
 read -p "Press enter to continue..."
 clear
 echo "$COLOR\0TN_TEST // LEM_IN$END"
-check_valgrind $n
+check_valgrind $n $p
 
 mv lem_in "lem-in"
 
