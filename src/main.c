@@ -91,7 +91,7 @@ int		main(void)
 	{
 		buf = save_instructions(buf, ft_itoa(params->ants), 1);
 		// buf = ft_strjoin_clr(buf, line, 2);
-		ft_printf("ant set\n");
+		// ft_printf("ant set\n");
 	}
 	while (get_next_line(0, &line) == 1)
 	{
@@ -99,24 +99,30 @@ int		main(void)
 		// buf = ft_strjoin_clr(buf, line, 0);
 		if (set_start(line, params, &mod) == 1)
 		// {
-			ft_printf("nextline is start\n");
+			;
+			// ft_printf("nextline is start\n");
 			// ft_printf("%s\n", line);
 		// }
 		else if (set_end(line, params, &mod) == 1)
 		// {
-			ft_printf("nextline is end\n");
+			;
+			// ft_printf("nextline is end\n");
 			// ft_printf("%s\n", line);
 		// }
 		else if (is_comment(line) == 1)
-			ft_printf("comment\n");
+			// ft_printf("comment\n");
+			;
 		else if ((set_room(line, params, &mod, &graph)))
-			ft_printf("room set\n");
+			// ft_printf("room set\n");
+			;
 		else if (set_link(line, params, graph) == 1)
-			ft_printf("link set\n");
+			// ft_printf("link set\n");
+			;
 		else
 			{
 				ft_printf("FUNCTION ERROR on %s\n", line);
 				print_nodes(graph);
+				params->graph = graph;
 				free_params(params);
 				free(buf);
 				free(line);
@@ -131,8 +137,9 @@ int		main(void)
 		}
 	else
 		ft_printf("PARAMS ERROR\n");
-	free_params(params);
 	print_nodes(graph);
+	params->graph = graph;
+	free_params(params);
 	free(buf);
 	return (0);
 }

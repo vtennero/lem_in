@@ -65,6 +65,7 @@ int					set_link(char *line, t_lem *params, t_node *node);
 t_node				*create_node(int x, int y, char *name);
 t_node				*pushback_node(t_node *start, t_node *new);
 // t_node			*build_graph(t_lem *params);
+void				free_edges(t_node *node);
 t_node				*free_node(t_node *node);
 void				print_nodes(t_node *node);
 t_node				*fetch_node(t_node *node, char *name);

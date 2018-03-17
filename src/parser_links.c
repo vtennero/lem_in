@@ -12,6 +12,23 @@
 
 #include "lem_in.h"
 
+void		free_edges(t_node *node)
+{
+	t_link	*tmp;
+
+	ft_printf("free edges for %s\n", node->name);
+	if (!node->edges)
+		ft_printf("node->edges doesnt exist\n");
+	while (node->edges)
+	{
+		tmp = node->edges;
+		ft_printf("freeing edge %s for %s\n", node->edges->connection->name, node->name);
+		node->edges = node->edges->next;
+		free(tmp);
+		tmp = NULL;
+	}
+}
+
 static int	is_valid_link(char *str, int dash, t_node *node)
 {
 	char	*room_one;
@@ -86,29 +103,29 @@ int			assign_edge(t_node *node_a, t_node *node_b)
 	t_link	*tmp;
 	// t_link	*last;
 	
-	ft_printf("assign_edge for %s-%s\n", node_a->name, node_b->name);
+	// ft_printf("assign_edge for %s-%s\n", node_a->name, node_b->name);
 	if (!node_a->edges)
 	{
-		ft_printf("creating first edge\n");
+		// ft_printf("creating first edge\n");
 		node_a->edges = create_edge(node_b);
 		return (1);
 	}
 	tmp = node_a->edges;
 	while (tmp->next != NULL)
 	{
-		ft_printf("loop\n");
-		ft_printf("connection = %s\n", node_a->edges->connection->name);
+		// ft_printf("loop\n");
+		// ft_printf("connection = %s\n", node_a->edges->connection->name);
 		if (ft_strcmp(tmp->connection->name, node_b->name) == 0)
 			return (0);
 		// node_a->edges = node_a->edges->next;
 		// last = tmp;
 		tmp = tmp->next;
 	}
-	ft_printf("endof loop\n");
-	ft_printf("connection to be added = %s\n", node_b->name);
+	// ft_printf("endof loop\n");
+	// ft_printf("connection to be added = %s\n", node_b->name);
 	tmp->next = create_edge(node_b);
 	// last->next = tmp;
-	ft_printf("new edge is %s\n", node_a->edges->connection->name);
+	// ft_printf("new edge is %s\n", node_a->edges->connection->name);
 	return (1);
 	// ft_printf("assign_edge for %s-%s\n", node_a->name, node_b->name);
 	// if (node_a->edges !=NULL)

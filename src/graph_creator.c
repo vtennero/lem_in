@@ -16,16 +16,17 @@ t_node			*free_node(t_node *node)
 {
 	t_node		*tmp;
 
-	tmp = node;
-	while(tmp)
+	while(node)
 	{
-		tmp = node->next;
+		ft_printf("launching frees for %s\n", node->name);
+		// ft_printf("%s s first edge is %s\n", node->name, node->edges->connection->name);
+		tmp = node;
+		free_edges(node);
 		free(node->name);
 		node->name = NULL;
-		free(node->edges);
-		node->edges = NULL;
-		free(node);
-		node = NULL;
+		node = node->next;
+		free(tmp);
+		tmp = NULL;
 	}
 	return (0);
 }
@@ -49,6 +50,7 @@ void			print_nodes(t_node *node)
 t_node			*fetch_node(t_node *node, char *name)
 {
 	while (node)
+		
 	{
 		if (ft_strcmp(name, node->name) == 0)
 			return (node);
