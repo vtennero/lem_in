@@ -54,7 +54,7 @@ int					set_start(char *line, t_lem *params, int *mod);
 int					is_comment(char *line);
 int					set_room(char *line, t_lem *params, int *mod, t_node **graph);
 int					set_end(char *line, t_lem *params, int *mod);
-int					set_link(char *line, t_lem *params, t_node *node);
+int					set_link(char *line, t_lem *params, t_node **node);
 /*
  ** ------------------------- SOLVER -------------------------
  */
@@ -67,7 +67,7 @@ t_node				*pushback_node(t_node *start, t_node *new);
 // t_node			*build_graph(t_lem *params);
 void				free_edges(t_node *node);
 t_node				*free_node(t_node *node);
-void				print_nodes(t_node *node);
+void				print_nodes(t_lem *params);
 t_node				*fetch_node(t_node *node, char *name);
 
 

@@ -146,7 +146,7 @@ int			assign_edge(t_node *node_a, t_node *node_b)
 	// ft_printf("new edge is %s\n", node_a->edges->connection->name);
 }
 
-int			set_link(char *line, t_lem *params, t_node *node)
+int			set_link(char *line, t_lem *params, t_node **node)
 {
 	int		dash;
 	t_node	*node_a;
@@ -160,7 +160,7 @@ int			set_link(char *line, t_lem *params, t_node *node)
 	dash = ft_char_pos(line, '-');
 	// ft_printf("dash = %d\n", dash);
 	// if (!(dash == -1) && (is_valid_link(line, dash)))
-	if (dash == -1 || (is_valid_link(line, dash, node) == 0) \
+	if (dash == -1 || (is_valid_link(line, dash, *node) == 0) \
 	 || !params->end || !params->start || !params->rooms)
 		return (0);
 	params->links += 1;
@@ -171,8 +171,8 @@ int			set_link(char *line, t_lem *params, t_node *node)
 		free(room_one);
 		return (0);
 	}
-	node_a = fetch_node(node, room_one);
-	node_b = fetch_node(node, room_two);
+	node_a = fetch_node(*node, room_one);
+	node_b = fetch_node(*node, room_two);
 	assign_edge(node_a, node_b);
 	assign_edge(node_b, node_a);
 	// node_a->edges = pushback_edge(node_a->edges, node_b);

@@ -44,11 +44,14 @@ void	free_params(t_lem *params)
 {
 	// ft_memdel(&params);
 
+	ft_printf("free params\n");
 	free(params->start);
 	params->start = NULL;
 	free(params->end);
 	params->end = NULL;
+	ft_printf("free params->graph\n");
 	free_node(params->graph);
+	ft_printf("free params->graph done\n");
 	free(params);
 	params = NULL;
 }
@@ -70,12 +73,12 @@ int		main(void)
 {
 	char		*line;
 	t_lem		*params;
-	t_node		*graph;
+	// t_node		*graph;
 	char		*buf;
 	int			mod;
 
 	line = NULL;
-	graph = NULL;
+	// graph = NULL;
 	buf = NULL;
 	mod = 0;
 	params = (t_lem *)malloc(sizeof(t_lem));
@@ -112,17 +115,17 @@ int		main(void)
 		else if (is_comment(line) == 1)
 			// ft_printf("comment\n");
 			;
-		else if ((set_room(line, params, &mod, &graph)))
+		else if ((set_room(line, params, &mod, &params->graph)))
 			// ft_printf("room set\n");
 			;
-		else if (set_link(line, params, graph) == 1)
+		else if (set_link(line, params, &params->graph) == 1)
 			// ft_printf("link set\n");
 			;
 		else
 			{
 				ft_printf("FUNCTION ERROR on %s\n", line);
-				print_nodes(graph);
-				params->graph = graph;
+				print_nodes(params);
+				// params->graph = graph;
 				free_params(params);
 				free(buf);
 				free(line);
@@ -137,8 +140,9 @@ int		main(void)
 		}
 	else
 		ft_printf("PARAMS ERROR\n");
-	print_nodes(graph);
-	params->graph = graph;
+	// print_nodes(graph);
+	// params->graph = graph;
+	print_nodes(params);
 	free_params(params);
 	free(buf);
 	return (0);

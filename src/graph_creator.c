@@ -16,6 +16,7 @@ t_node			*free_node(t_node *node)
 {
 	t_node		*tmp;
 
+	ft_printf("free nodes\n");
 	while(node)
 	{
 		ft_printf("launching frees for %s\n", node->name);
@@ -28,22 +29,23 @@ t_node			*free_node(t_node *node)
 		free(tmp);
 		tmp = NULL;
 	}
+	ft_printf("free nodes done\n");
 	return (0);
 }
 
-void			print_nodes(t_node *node)
+void			print_nodes(t_lem *params)
 {
 	ft_printf("PRINT NODES & EDGES\n");
-	while (node)
+	while (params->graph)
 	{
-		ft_printf("Node %s connected to: ", node->name);
-		while (node->edges != NULL)
+		ft_printf("Node %s connected to: ", params->graph->name);
+		while (params->graph->edges != NULL)
 		{
-			ft_printf("%s ", node->edges->connection->name);
-			node->edges = node->edges->next;
+			ft_printf("%s ", params->graph->edges->connection->name);
+			params->graph->edges = params->graph->edges->next;
 		}
 		ft_printf("\n");
-		node = node->next;
+		params->graph = params->graph->next;
 	}
 }
 
