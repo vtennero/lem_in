@@ -12,23 +12,6 @@
 
 #include "lem_in.h"
 
-void		free_edges(t_node *node)
-{
-	t_link	*tmp;
-
-	ft_printf("free edges for %s\n", node->name);
-	if (!node->edges)
-		ft_printf("node->edges doesnt exist\n");
-	while (node->edges)
-	{
-		tmp = node->edges;
-		ft_printf("freeing edge %s for %s\n", node->edges->connection->name, node->name);
-		node->edges = node->edges->next;
-		free(tmp);
-		tmp = NULL;
-	}
-}
-
 static int	is_valid_link(char *str, int dash, t_node *node)
 {
 	char	*room_one;
@@ -66,7 +49,7 @@ static int	is_valid_link(char *str, int dash, t_node *node)
 	return (1);
 }
 
-t_link			*create_edge(t_node *node)
+static t_link	*create_edge(t_node *node)
 {
 	t_link		*new_edge;
 
@@ -79,28 +62,9 @@ t_link			*create_edge(t_node *node)
 	return (new_edge);
 }
 
-// t_link			*pushback_edge(t_link *start, t_node *new)
-// {
-// 	t_link		*tmp;
-
-// 	tmp = NULL;
-// 	if (!start)
-// 		return (new);
-// 	// ft_printf("start->name = |%s|\n", start->name);
-// 	if (new)
-// 	{
-// 		tmp = start;
-// 		while (tmp->next != NULL)
-// 			tmp = tmp->next;
-// 		tmp->next = new;
-// 	}
-// 	// ft_printf("after :start->name = |%s|\n", start->name);
-// 	return (start);
-// }
-
-int			assign_edge(t_node *node_a, t_node *node_b)
+static int		assign_edge(t_node *node_a, t_node *node_b)
 {
-	t_link	*tmp;
+	t_link		*tmp;
 	// t_link	*last;
 	
 	// ft_printf("assign_edge for %s-%s\n", node_a->name, node_b->name);
@@ -181,24 +145,3 @@ int			set_link(char *line, t_lem *params, t_node **node)
 	free (room_two);
 	return (1);
 }
-
-// int			check_link_format(char *str, int dash)
-// {
-// 	int		i;
-// 	int		len;
-
-// 	ft_printf("checking link format\n");
-// 	i = 0;
-// 	len = ft_strlen(str);
-// 	while (i < len)
-// 	{
-// 		if (i != dash && ft_isdigit(str[i]) == 0)
-// 			{
-// 				ft_printf("i = ; dash = ; ")
-// 			return (0);
-// 			}
-// 		i++;
-// 	}
-// 	ft_printf("correct format\n");
-// 	return (1);
-// }

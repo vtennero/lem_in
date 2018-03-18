@@ -25,6 +25,7 @@ typedef struct		s_node
 {
 	char			*name;
 	int				visited;
+	int				distance;
 	struct s_link	*edges;
 	struct s_node	*next;
 	struct s_point	coord;
@@ -58,16 +59,15 @@ int					set_link(char *line, t_lem *params, t_node **node);
 /*
  ** ------------------------- SOLVER -------------------------
  */
-
+void				solver(t_lem *params);
 /*
  ** ------------------------- UTILITIES -------------------------
  */
 t_node				*create_node(int x, int y, char *name);
 t_node				*pushback_node(t_node *start, t_node *new);
-// t_node			*build_graph(t_lem *params);
-void				free_edges(t_node *node);
 t_node				*free_node(t_node *node);
 void				print_nodes(t_lem *params);
+void				free_params(t_lem *params);
 t_node				*fetch_node(t_node *node, char *name);
 
 

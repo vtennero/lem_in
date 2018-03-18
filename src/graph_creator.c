@@ -12,51 +12,40 @@
 
 #include "lem_in.h"
 
-t_node			*free_node(t_node *node)
-{
-	t_node		*tmp;
-
-	ft_printf("free nodes\n");
-	while(node)
-	{
-		ft_printf("launching frees for %s\n", node->name);
-		// ft_printf("%s s first edge is %s\n", node->name, node->edges->connection->name);
-		tmp = node;
-		free_edges(node);
-		free(node->name);
-		node->name = NULL;
-		node = node->next;
-		free(tmp);
-		tmp = NULL;
-	}
-	ft_printf("free nodes done\n");
-	return (0);
-}
-
 void			print_nodes(t_lem *params)
 {
+	t_node	*tmp;
+	t_link	*lnk;
+
+	tmp = params->graph;
 	ft_printf("PRINT NODES & EDGES\n");
-	while (params->graph)
+	ft_printf("start : %s\n", params->start);
+	ft_printf("end : %s\n", params->end);
+	ft_printf("ants : %d\n", params->ants);
+	while (tmp)
 	{
-		ft_printf("Node %s connected to: ", params->graph->name);
-		while (params->graph->edges != NULL)
+		lnk = tmp->edges;
+		ft_printf("Node %s with distance = %d connected to: ", tmp->name, tmp->distance);
+		while (lnk != NULL)
 		{
-			ft_printf("%s ", params->graph->edges->connection->name);
-			params->graph->edges = params->graph->edges->next;
+			ft_printf("%s ", lnk->connection->name);
+			lnk = lnk->next;
 		}
 		ft_printf("\n");
-		params->graph = params->graph->next;
+		tmp = tmp->next;
 	}
 }
 
 t_node			*fetch_node(t_node *node, char *name)
 {
-	while (node)
-		
+	t_node		*tmp;
+
+	tmp = node;
+	while (tmp)
 	{
-		if (ft_strcmp(name, node->name) == 0)
-			return (node);
-		node = node->next;
+		if (ft_strcmp(name, tmp->name) == 0)
+			return (tmp);
+		tmp = tmp->next;
 	}
 	return (0);
 }
@@ -72,6 +61,7 @@ t_node			*create_node(int x, int y, char *name)
 			// return (free_node(new_node));
 		new_node->name = name;
 		new_node->visited = 0;
+		new_node->distance = 0;
 		new_node->coord.x = x;
 		new_node->coord.y = y;
 		new_node->next = NULL;

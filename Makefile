@@ -23,7 +23,9 @@ SRC = main.c \
 		parser_ants.c \
 		parser_com.c \
 		parser_rooms.c \
-		graph_creator.c
+		graph_creator.c \
+		free_for_all.c \
+		solver.c
 
 PSRC = $(addprefix src/, $(SRC))
 

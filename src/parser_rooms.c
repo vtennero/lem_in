@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-int			parse_coord(char *str, int len)
+static int	parse_coord(char *str, int len)
 {
 	int		i;
 	int		coord;
@@ -30,7 +30,7 @@ int			parse_coord(char *str, int len)
 	return (coord);
 }
 
-int			is_room(char *str, int *x, int *y)
+static int	is_room(char *str, int *x, int *y)
 {
 	int		i;
 	int		x_space;
@@ -48,7 +48,7 @@ int			is_room(char *str, int *x, int *y)
 	return (1);
 }
 
-int			is_duplicate_room(t_node *new, t_node *start)
+static int		is_duplicate_room(t_node *new, t_node *start)
 {
 	while (start)
 	{

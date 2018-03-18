@@ -14,9 +14,6 @@
 
 int		check_params(t_lem *params)
 {
-	ft_printf("start : %s\n", params->start);
-	ft_printf("end : %s\n", params->end);
-	ft_printf("ants : %d\n", params->ants);
 	if (!params->start)
 		return (0);
 	if (!params->end)
@@ -40,22 +37,6 @@ void	init_params(t_lem *params)
 	params->graph = NULL;
 }
 
-void	free_params(t_lem *params)
-{
-	// ft_memdel(&params);
-
-	ft_printf("free params\n");
-	free(params->start);
-	params->start = NULL;
-	free(params->end);
-	params->end = NULL;
-	ft_printf("free params->graph\n");
-	free_node(params->graph);
-	ft_printf("free params->graph done\n");
-	free(params);
-	params = NULL;
-}
-
 char*		save_instructions(char *buf, char *new, int i)
 {
 	char	*instructions;
@@ -69,7 +50,7 @@ char*		save_instructions(char *buf, char *new, int i)
 	return (instructions);
 }
 
-int		main(void)
+int		parser(void)
 {
 	char		*line;
 	t_lem		*params;
@@ -85,10 +66,10 @@ int		main(void)
 	init_params(params);
 	if (set_ant(params) == 0)
 	{
-		ft_printf("ERROR\n");
+		// ft_printf("ERROR\n");
 		free(line);
 		free_params(params);
-		return (0);
+		return (2);
 	}
 	else
 	{
@@ -123,8 +104,8 @@ int		main(void)
 			;
 		else
 			{
-				ft_printf("FUNCTION ERROR on %s\n", line);
-				print_nodes(params);
+				// ft_printf("FUNCTION ERROR on %s\n", line);
+				// print_nodes(params);
 				// params->graph = graph;
 				free_params(params);
 				free(buf);
@@ -134,16 +115,32 @@ int		main(void)
 		free(line);
 	}
 	if (check_params(params) == 1)
-		{
-			ft_printf("ALL CLEAR\n");
-			// ft_printf("%s\n", buf);
-		}
-	else
-		ft_printf("PARAMS ERROR\n");
-	// print_nodes(graph);
-	// params->graph = graph;
-	print_nodes(params);
+	{
+		solver(params);
+		free_params(params);
+		free(buf);
+		return (1);
+	}
 	free_params(params);
 	free(buf);
+	return (3);
+	// print_nodes(graph);
+	// params->graph = graph;
+	// print_nodes(params);
+}
+
+int		main(void)
+{
+	int	result;
+
+	result = parser();
+	if (result == 1)
+		ft_printf("ALL CLEAR\n");
+	else if (result == 2)
+		ft_printf("ANTS ERROR\n");
+	else if (result == 3)
+		ft_printf("PARAMS ERROR");
+	else
+		ft_printf("ERROR");
 	return (0);
 }
