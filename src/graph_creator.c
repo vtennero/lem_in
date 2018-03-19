@@ -25,7 +25,7 @@ void			print_nodes(t_lem *params)
 	while (tmp)
 	{
 		lnk = tmp->edges;
-		ft_printf("Node %s with distance = %d connected to: ", tmp->name, tmp->distance);
+		ft_printf("Node %s with distance = %d, visited = %d, connected to: ", tmp->name, tmp->distance, tmp->visited);
 		while (lnk != NULL)
 		{
 			ft_printf("%s ", lnk->connection->name);
