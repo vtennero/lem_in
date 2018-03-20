@@ -36,8 +36,9 @@ all: $(NAME)
 $(NAME): src/lem_in.h
 	@ make -C libft/
 	@ gcc -c $(FLAGS) $(PSRC) -I src/
-	@ gcc -g $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
+	# @ gcc -g $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
 	# @ gcc $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
+	@ gcc $(FLAGS) $(SANITIZE) $(OBJ) libft/libft.a -o $(NAME)
 
 clean:
 	@ /bin/rm -f $(OBJ)
