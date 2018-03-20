@@ -44,6 +44,7 @@ typedef struct		s_lem
 	char			*end;
 	int				rooms;
 	int				links;
+	int				opl;
 	struct s_node	*graph;
 }					t_lem;
 
@@ -59,7 +60,7 @@ int					set_link(char *line, t_lem *params, t_node **node);
 /*
  ** ------------------------- SOLVER -------------------------
  */
-void				solver(t_lem *params);
+int					solver(t_lem *params);
 /*
  ** ------------------------- UTILITIES -------------------------
  */
@@ -69,6 +70,5 @@ t_node				*free_node(t_node *node);
 void				print_nodes(t_lem *params);
 void				free_params(t_lem *params);
 t_node				*fetch_node(t_node *node, char *name);
-
 
 #endif

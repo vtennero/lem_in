@@ -1,53 +1,53 @@
-==8479== Memcheck, a memory error detector
-==8479== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==8479== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==8479== Command: ./lem_in
-==8479== Parent PID: 6917
-==8479== 
-==8479== Syscall param msg->desc.port.name points to uninitialised byte(s)
-==8479==    at 0x1003B134A: mach_msg_trap (in /usr/lib/system/libsystem_kernel.dylib)
-==8479==    by 0x1003B0796: mach_msg (in /usr/lib/system/libsystem_kernel.dylib)
-==8479==    by 0x1003AA485: task_set_special_port (in /usr/lib/system/libsystem_kernel.dylib)
-==8479==    by 0x10054610E: _os_trace_create_debug_control_port (in /usr/lib/system/libsystem_trace.dylib)
-==8479==    by 0x100546458: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
-==8479==    by 0x1000AF9DF: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==8479==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==8479==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==8479==    by 0x10001B4A9: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==8479==    by 0x10001B440: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==8479==    by 0x10001A523: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==8479==    by 0x10001A5B8: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
-==8479==  Address 0x104892d8c is on thread 1's stack
-==8479==  in frame #2, created by task_set_special_port (???:)
-==8479== 
-==8479== 
-==8479== HEAP SUMMARY:
-==8479==     in use at exit: 18,159 bytes in 162 blocks
-==8479==   total heap usage: 270 allocs, 108 frees, 25,620 bytes allocated
-==8479== 
-==8479== 72 bytes in 3 blocks are possibly lost in loss record 26 of 42
-==8479==    at 0x1000A10B2: calloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==8479==    by 0x1005BA832: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==8479==    by 0x1005CDD6A: map_images (in /usr/lib/libobjc.A.dylib)
-==8479==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==8479==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==8479==    by 0x10020800A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==8479==    by 0x1005BA072: _objc_init (in /usr/lib/libobjc.A.dylib)
-==8479==    by 0x10019B68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==8479==    by 0x10019B63A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
-==8479==    by 0x1000AF9D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==8479==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==8479==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==8479== 
-==8479== LEAK SUMMARY:
-==8479==    definitely lost: 0 bytes in 0 blocks
-==8479==    indirectly lost: 0 bytes in 0 blocks
-==8479==      possibly lost: 72 bytes in 3 blocks
-==8479==    still reachable: 200 bytes in 6 blocks
-==8479==         suppressed: 17,887 bytes in 153 blocks
-==8479== Reachable blocks (those to which a pointer was found) are not shown.
-==8479== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==8479== 
-==8479== For counts of detected and suppressed errors, rerun with: -v
-==8479== Use --track-origins=yes to see where uninitialised values come from
-==8479== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 12 from 12)
+==12064== Memcheck, a memory error detector
+==12064== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12064== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12064== Command: ./lem_in
+==12064== Parent PID: 10384
+==12064== 
+==12064== Syscall param msg->desc.port.name points to uninitialised byte(s)
+==12064==    at 0x1003B134A: mach_msg_trap (in /usr/lib/system/libsystem_kernel.dylib)
+==12064==    by 0x1003B0796: mach_msg (in /usr/lib/system/libsystem_kernel.dylib)
+==12064==    by 0x1003AA485: task_set_special_port (in /usr/lib/system/libsystem_kernel.dylib)
+==12064==    by 0x10054610E: _os_trace_create_debug_control_port (in /usr/lib/system/libsystem_trace.dylib)
+==12064==    by 0x100546458: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
+==12064==    by 0x1000AF9DF: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==12064==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==12064==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==12064==    by 0x10001B4A9: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==12064==    by 0x10001B440: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==12064==    by 0x10001A523: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==12064==    by 0x10001A5B8: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==12064==  Address 0x104892d4c is on thread 1's stack
+==12064==  in frame #2, created by task_set_special_port (???:)
+==12064== 
+==12064== 
+==12064== HEAP SUMMARY:
+==12064==     in use at exit: 18,159 bytes in 162 blocks
+==12064==   total heap usage: 270 allocs, 108 frees, 25,628 bytes allocated
+==12064== 
+==12064== 72 bytes in 3 blocks are possibly lost in loss record 26 of 42
+==12064==    at 0x1000A10B2: calloc (in /Users/vtennero/.brew/Cellar/valgrind/3.13.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==12064==    by 0x1005BA832: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==12064==    by 0x1005CDD6A: map_images (in /usr/lib/libobjc.A.dylib)
+==12064==    by 0x10000F03B: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==12064==    by 0x10000F255: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==12064==    by 0x10020800A: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==12064==    by 0x1005BA072: _objc_init (in /usr/lib/libobjc.A.dylib)
+==12064==    by 0x10019B68D: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==12064==    by 0x10019B63A: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==12064==    by 0x1000AF9D5: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==12064==    by 0x10001FA1A: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==12064==    by 0x10001FC1D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==12064== 
+==12064== LEAK SUMMARY:
+==12064==    definitely lost: 0 bytes in 0 blocks
+==12064==    indirectly lost: 0 bytes in 0 blocks
+==12064==      possibly lost: 72 bytes in 3 blocks
+==12064==    still reachable: 200 bytes in 6 blocks
+==12064==         suppressed: 17,887 bytes in 153 blocks
+==12064== Reachable blocks (those to which a pointer was found) are not shown.
+==12064== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==12064== 
+==12064== For counts of detected and suppressed errors, rerun with: -v
+==12064== Use --track-origins=yes to see where uninitialised values come from
+==12064== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 12 from 12)

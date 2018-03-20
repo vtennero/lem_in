@@ -34,6 +34,7 @@ void	init_params(t_lem *params)
 	params->ants = 0;
 	params->rooms = 0;
 	params->links = 0;
+	params->opl = 0;
 	params->graph = NULL;
 }
 
@@ -116,7 +117,13 @@ int		parser(void)
 	}
 	if (check_params(params) == 1)
 	{
-		solver(params);
+		// ft_printf("%s\n", buf);
+		if (solver(params) == 0)
+		{
+			free_params(params);
+			free(buf);
+			return (4);
+		}
 		free_params(params);
 		free(buf);
 		return (1);
@@ -140,6 +147,8 @@ int		main(void)
 		ft_printf("ANTS ERROR\n");
 	else if (result == 3)
 		ft_printf("PARAMS ERROR");
+	else if (result == 4)
+		ft_printf("SOLVER ERROR");
 	else
 		ft_printf("ERROR");
 	return (0);

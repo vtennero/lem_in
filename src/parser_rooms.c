@@ -50,19 +50,22 @@ static int	is_room(char *str, int *x, int *y)
 
 static int		is_duplicate_room(t_node *new, t_node *start)
 {
-	while (start)
+	t_node		*tmp;
+
+	tmp = start;
+	while (tmp)
 	{
-		if (ft_strcmp(start->name, new->name) == 0)
+		if (ft_strcmp(tmp->name, new->name) == 0)
 		{
 			free_node(new);
 			return (1);
 		}
-		if (start->coord.x == new->coord.x && start->coord.y == new->coord.y)
+		if (tmp->coord.x == new->coord.x && tmp->coord.y == new->coord.y)
 		{
 			free_node(new);
 			return (1);
 		}
-		start = start->next;
+		tmp = tmp->next;
 	}
 	return (0);
 }
@@ -79,8 +82,8 @@ int			set_room(char *line, t_lem *params, int *mod, t_node **graph)
 	{
 		name = ft_strndup(line, ft_char_pos(line, ' '));
 		new = create_node(x, y, name);
-		if (name && is_duplicate_room(new, *graph))
-			return (1);
+		if (!name || is_duplicate_room(new, *graph))
+			return (0);
 		*graph = pushback_node(*graph, new);
 		if (*mod == 1 && params->start == NULL)
 		{

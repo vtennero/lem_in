@@ -17,10 +17,12 @@ static int	is_valid_link(char *str, int dash, t_node *node)
 	char	*room_one;
 	char	*room_two;
 	int		counter;
+	t_node	*tmp;
 
 	counter = 0;
 	room_one = ft_strndup(str, dash);
 	room_two = ft_strdup(str + dash + 1);
+	tmp = node;
 	// ft_printf("room one %s room two %s\n", room_one, room_two);
 	if (room_one && room_two)
 	{
@@ -31,13 +33,13 @@ static int	is_valid_link(char *str, int dash, t_node *node)
 				// ft_printf("rooms are identical\n");
 				return (0);
 			}
-		while (node)
+		while (tmp)
 		{
 			// ft_printf("loop\n");
-			if (ft_strcmp(node->name, room_one) == 0 || ft_strcmp(node->name, room_two) == 0)
+			if (ft_strcmp(tmp->name, room_one) == 0 || ft_strcmp(tmp->name, room_two) == 0)
 				counter++;
-			// ft_printf("node->name = |%s| versus room_one = |%s| and room_two = |%s|\n", node->name, room_one, room_two);
-			node = node->next;
+			// ft_printf("tmp->name = |%s| versus room_one = |%s| and room_two = |%s|\n", tmp->name, room_one, room_two);
+			tmp = tmp->next;
 		}
 	}
 	// ft_printf("free(room_one)\n");

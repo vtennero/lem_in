@@ -12,57 +12,7 @@
 
 #include "lem_in.h"
 
-t_link		*enqueue(t_node *node, t_link *to_visit, int dist)
-{
-	t_link	*tmp;
-
-	ft_printf("enqueue %s\n", node->name);
-	if (to_visit)
-		ft_printf("begin of the list = %s\n", to_visit->connection->name);
-	tmp = to_visit;
-	while (tmp != NULL)
-		tmp = tmp->next;
-	if (!(tmp = (t_link *)malloc(sizeof(t_link))))
-		return (NULL);
-	node->visited = 1;
-	node->distance = dist;
-	tmp->connection = node;
-	tmp->next = NULL;
-	ft_printf("return %s\n", tmp->connection->name);
-	return (to_visit);
-}
-
-t_link		*dequeue_first(t_link *to_visit)
-{
-	t_link	*new_start;
-
-	new_start = to_visit->next;
-	free(to_visit);
-	to_visit = NULL;
-	return (new_start);
-}
-
-static int	set_distance(t_node *node, t_node *end, int dist)
-{
-	t_link	*lnk;
-
-	ft_printf("setting %d dist from %s\n", dist, node->name);
-	// ft_printf("set dist\n");
-	node->visited = 1;
-	node->distance = dist;
-	lnk = node->edges;
-	while (lnk)
-	{
-		if (ft_strcmp(lnk->connection->name, end->name) == 0)
-			break ;
-		if (lnk->connection->visited == 0)
-			set_distance(lnk->connection, end, dist + 1);
-		lnk = lnk->next;
-	}
-	return (0);
-}
-
-t_link			*create_visit(t_node *node, int dist)
+static t_link	*create_queue_elt(t_node *node, int dist)
 {
 	t_link		*new_visit;
 
@@ -71,75 +21,161 @@ t_link			*create_visit(t_node *node, int dist)
 	{
 		new_visit->connection = node;
 		new_visit->next = NULL;
-		node->distance = dist;
+		if (!(dist == -1))
+			node->distance = dist;
 		node->visited = 1;
 	}
 	return (new_visit);
 }
 
-t_link			*pushback_to_visit(t_link *start, t_link *new)
+static t_link	*enqueue(t_link *start, t_node *add, int dist)
 {
 	t_link		*tmp;
+	t_link		*new;
 
+	// ft_printf("enqueue %s\n", add->name);
+	new = create_queue_elt(add, dist);
 	tmp = NULL;
 	if (!start)
 		return (new);
 	if (new)
 	{
-		tmp = start;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = new;
+		if (dist == -1)
+		{
+			new->next = start;
+			start = new;
+		}
+		else
+		{
+			tmp = start;
+			while (tmp->next != NULL)
+				tmp = tmp->next;
+			tmp->next = new;
+		}
 	}
+	// ft_printf("enqueue returns %s\n", start->connection->name);
 	return (start);
 }
 
-void		solver(t_lem *params)
+static t_link	*dequeue(t_link *element)
 {
-	t_node	*start;
-	t_node	*end;
-	t_link	*tmp;
-	t_link	*tmp2;
-	t_link	*to_visit;
+	t_link		*new_start;
 
-	to_visit = NULL;
-	start = fetch_node(params->graph, params->start);
-	start->visited = 1;
-	end = fetch_node(params->graph, params->end);
-	tmp = start->edges;
-	while (tmp)
-	{
-		if (tmp->connection->visited == 0)
-		{
-			ft_printf("1. not visited %s\n", tmp->connection->name);
-			to_visit = pushback_to_visit(to_visit, create_visit(tmp->connection, 1));
-			// to_visit = (tmp->connection, to_visit, 1);
-			// ft_printf("to visit set, first element %s\n", to_visit->connection->name);
-		}
-		tmp = tmp->next;
-	}
-	// ft_printf("to visit set, first element %s\n", to_visit->connection->name);
-
-	tmp2 = to_visit->connection->edges;
-	while (tmp2)
-	{
-		ft_printf("2. visiting %s\n", tmp2->connection->name);
-		// to_visit = dequeue_first(to_visit);
-		if (tmp2->connection->visited == 0)
-			to_visit = pushback_to_visit(to_visit, create_visit(tmp2->connection, 2));
-		tmp2 = tmp2->next;
-	}
-	tmp2 = to_visit->next->connection->edges;
-	while (tmp2)
-	{
-		ft_printf("2. visiting %s\n", tmp2->connection->name);
-		// to_visit = dequeue_first(to_visit);
-		if (tmp2->connection->visited == 0)
-			to_visit = pushback_to_visit(to_visit, create_visit(tmp2->connection, 2));
-		tmp2 = tmp2->next;
-	}
-	// set_distance(start, end, 0);
-	ft_printf("distances set\n");
-	print_nodes(params);
+	new_start = element->next;
+	free(element);
+	element = NULL;
+	return (new_start);
 }
 
+t_link			*get_path(t_lem *params)
+{
+	t_node		*start;
+	t_node		*end;
+	t_link		*path;
+	t_link		*tmp;
+	int			dist;
+
+	// ft_printf("--------get path-------\n");
+	start = fetch_node(params->graph, params->start);
+	end = fetch_node(params->graph, params->end);
+	params->opl = end->distance;
+	path = NULL;
+	path = enqueue(path, end, -1);
+	dist = params->opl;
+	while (dist != -1)
+	{
+		// ft_printf("dist that is being searched = %d\n", dist - 1);
+		// ft_printf("path top = %s\n", path->connection->name);
+		tmp = path->connection->edges;
+		while (tmp)
+		{
+			if (tmp->connection->distance == dist - 1 && tmp->connection->visited == 1)
+			{
+				// ft_printf("adding %s\n", tmp->connection->name);
+				path = enqueue(path, tmp->connection, -1);
+				break ;
+				// if (ft_strcmp(tmp->connection->name, start->name) == 0)
+					// break ; 
+			}
+			tmp = tmp->next;
+		}
+		dist--;
+	}
+	return (path);
+}
+
+int			free_queue(t_link *queue)
+{
+	t_link	*tmp;
+
+	while (queue)
+	{
+		tmp = queue;
+		queue = queue->next;
+		free (tmp);
+	}
+	return (1);
+}
+
+int			traverse_graph(t_lem *params)
+{
+	t_node		*start;
+	t_node		*end;
+	t_link		*queue;
+	t_node		*visiting;
+	t_link		*tmp;
+
+	queue = NULL;
+	start = fetch_node(params->graph, params->start);
+	end = fetch_node(params->graph, params->end);
+	queue = enqueue(queue, start, 0);
+	while (queue)
+	{
+		visiting = queue->connection;
+		tmp = visiting->edges;
+		queue = dequeue(queue);
+		while (tmp)
+		{
+			if (tmp->connection->visited == 0)
+				queue = enqueue(queue, tmp->connection, visiting->distance + 1);
+			if (ft_strcmp(tmp->connection->name, end->name) == 0)
+				return (free_queue(queue));
+			tmp = tmp->next;
+		}
+	}
+	return (0);
+}
+
+void			print_optimal_path(t_link *path, int len)
+{
+	t_link		*tmp;
+	t_link		*to_free;
+	int			i;
+
+	i = 0;
+	tmp = path;
+	while (i < len + 1)
+	{
+		if (i != len)
+			ft_printf("%s -> ", tmp->connection->name);
+		else
+			ft_printf("%s\n", tmp->connection->name);
+		to_free = tmp;
+		tmp = tmp->next;
+		free(to_free);
+		to_free = NULL;
+		i++;
+	}
+}
+
+int				solver(t_lem *params)
+{
+	t_link		*optimal_path;
+
+	if (!(traverse_graph(params) == 1))
+		return (0);
+	if ((optimal_path = get_path(params)))
+		print_optimal_path(optimal_path, fetch_node(params->graph, params->end)->distance);
+	// print_nodes(params);
+	return (1);
+}
