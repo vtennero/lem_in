@@ -108,6 +108,16 @@ int		parser(void)
 				// ft_printf("FUNCTION ERROR on %s\n", line);
 				// print_nodes(params);
 				// params->graph = graph;
+				if (check_params(params) == 1)
+				{
+					if (solver(params) == 0)
+					{
+						free_params(params);
+						free(buf);
+						free(line);
+						return (4);
+					}
+				}
 				free_params(params);
 				free(buf);
 				free(line);

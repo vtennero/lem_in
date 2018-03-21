@@ -34,14 +34,18 @@ int				ft_read_line(char *buf, char **line, int fd)
 {
 	int			ret;
 	int			eol_pos;
-
+	int			n;
+	
 	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[ret] = '\0';
 		if ((eol_pos = ft_char_pos(buf, '\n')) >= 0)
 		{
 			*line = ft_strjoin_clr(*line, ft_strndup(buf, eol_pos), 2);
-			ft_memcpy(buf, buf + eol_pos + 1, BUFF_SIZE);
+			n = BUFF_SIZE - (eol_pos + 1);
+			ft_memcpy(buf, buf + eol_pos + 1, n);
+			if (n < BUFF_SIZE)
+				ft_bzero(buf + n, BUFF_SIZE - n);
 			return (1);
 		}
 		else
