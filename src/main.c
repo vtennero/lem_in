@@ -6,7 +6,7 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 18:05:41 by vtennero          #+#    #+#             */
-/*   Updated: 2018/03/04 18:05:45 by vtennero         ###   ########.fr       */
+/*   Updated: 2018/03/22 17:26:23 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,58 +49,34 @@ static char		*save_instructions(char *buf, char *new, int i)
 		instructions = ft_strjoin_clr(buf, ft_strjoin(new, "\n"), 2);
 	return (instructions);
 }
+
 static int		parser(t_lem *params)
 {
-	char		*line;
+	char		*l;
 	char		*buf;
 	int			mod;
+	int			result;
 
-	line = NULL;
+	l = NULL;
 	buf = NULL;
 	mod = 0;
 	if (set_ant(params) == 0)
-	{
-		free(line);
-		// free_params(params);
 		return (2);
-	}
 	else
 		buf = save_instructions(buf, ft_itoa(params->ants), 1);
-	while (get_next_line(0, &line) == 1)
+	while (get_next_line(0, &l) == 1)
 	{
-		buf = save_instructions(buf, line, 2);
-		if (set_start(line, params, &mod) == 1)
-			;
-		else if (set_end(line, params, &mod) == 1)
-			;
-		else if (is_comment(line) == 1)
-			;
-		else if ((set_room(line, params, &mod, &params->graph)))
-			;
-		else if (set_link(line, params, &params->graph) == 1)
-			;
-		else
-		{
-			free(line);
+		buf = save_instructions(buf, l, 2);
+		if (!(set_start(l, params, &mod)) && !(set_end(l, params, &mod))
+				&& !(is_com(l)) && !(set_room(l, params, &mod, &params->graph))
+				&& !(set_link(l, params, &params->graph)))
 			break ;
-		}
-		free(line);
+		free(l);
 	}
-	if (check_params(params) == 1)
-	{
-		if (solver(params, buf) == 0)
-		{
-			// free_params(params);
-			free(buf);
-			return (4);
-		}
-		// free_params(params);
-		free(buf);
-		return (1);
-	}
-	// free_params(params);
+	free(l);
+	result = (check_params(params) && solver(params, buf)) ? 1 : 0;
 	free(buf);
-	return (3);
+	return (result);
 }
 
 int				main(void)
@@ -117,77 +93,3 @@ int				main(void)
 	free_params(params);
 	return (0);
 }
-// static int		parser(void)
-// {
-// 	char		*line;
-// 	t_lem		*params;
-// 	char		*buf;
-// 	int			mod;
-
-// 	line = NULL;
-// 	buf = NULL;
-// 	mod = 0;
-// 	params = (t_lem *)malloc(sizeof(t_lem));
-// 	init_params(params);
-// 	if (set_ant(params) == 0)
-// 	{
-// 		free(line);
-// 		free_params(params);
-// 		return (2);
-// 	}
-// 	else
-// 		buf = save_instructions(buf, ft_itoa(params->ants), 1);
-// 	while (get_next_line(0, &line) == 1)
-// 	{
-// 		buf = save_instructions(buf, line, 2);
-// 		if (set_start(line, params, &mod) == 1)
-// 			;
-// 		else if (set_end(line, params, &mod) == 1)
-// 			;
-// 		else if (is_comment(line) == 1)
-// 			;
-// 		else if ((set_room(line, params, &mod, &params->graph)))
-// 			;
-// 		else if (set_link(line, params, &params->graph) == 1)
-// 			;
-// 		else
-// 		{
-// 			free(line);
-// 			break ;
-// 		}
-// 		free(line);
-// 	}
-// 	if (check_params(params) == 1)
-// 	{
-// 		if (solver(params, buf) == 0)
-// 		{
-// 			free_params(params);
-// 			free(buf);
-// 			return (4);
-// 		}
-// 		free_params(params);
-// 		free(buf);
-// 		return (1);
-// 	}
-// 	free_params(params);
-// 	free(buf);
-// 	return (3);
-// }
-
-// int				main(void)
-// {
-// 	int			result;
-
-// 	result = parser();
-// 	if (result == 1)
-// 		;
-// 	else if (result == 2)
-// 		ft_printf("ERROR\n");
-// 	else if (result == 3)
-// 		ft_printf("ERROR\n");
-// 	else if (result == 4)
-// 		ft_printf("ERROR\n");
-// 	else
-// 		ft_printf("ERROR\n");
-// 	return (0);
-// }

@@ -60,7 +60,7 @@ typedef struct		s_lem
 */
 int					set_ant(t_lem *params);
 int					set_start(char *line, t_lem *params, int *mod);
-int					is_comment(char *line);
+int					is_com(char *line);
 int					set_room(char *line, t_lem *params, int *mod, t_node **gr);
 int					set_end(char *line, t_lem *params, int *mod);
 int					set_link(char *line, t_lem *params, t_node **node);

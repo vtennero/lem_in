@@ -35,7 +35,7 @@ int				ft_read_line(char *buf, char **line, int fd)
 	int			ret;
 	int			eol_pos;
 	int			n;
-	
+
 	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[ret] = '\0';

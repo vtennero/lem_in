@@ -39,7 +39,7 @@ static int		is_room(char *str, int *x, int *y)
 	i = 0;
 	x_space = ft_char_pos(str, ' ');
 	y_space = ft_char_pos(str + x_space + 1, ' ') + x_space + 1;
-	if (x_space == -1 || y_space == -1)
+	if (x_space == -1 || y_space == -1 || ft_strlen(str) == 0 || str[0] == 'L')
 		return (0);
 	*x = parse_coord(str + x_space + 1, y_space - (x_space + 1));
 	*y = parse_coord(str + y_space + 1, ft_strlen(str + y_space + 1));

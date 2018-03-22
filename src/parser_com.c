@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-int			is_comment(char *line)
+int			is_com(char *line)
 {
 	if (ft_strlen(line) >= 1 && line[0] == '#')
 		return (1);
