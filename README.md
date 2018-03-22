@@ -1,6 +1,8 @@
-# lem_in (Work in Progress)
+# lem_in
 
 The goal of this project is to find the quickest way to get n ants across a graph.
+
+To traverse the graphand find the shortest path, I used the breadth-first search method.
 
 ## Installing
 
@@ -9,6 +11,20 @@ Clone the repository and:
 make
 ```
 ## Running the tests
+
+### TN_test_Lem_in
+
+I have created my own test program : [TN_test_Lem_in](https://github.com/vtennero/TN_test_Lem_in)
+
+It tests 150+ relevant examples of invalid text inputs, as well as memory leaks using valgrind.
+
+To install it, simply put the content of the TN_test_Lem_in folder in your get_next_line folder, then do :
+
+```
+sh TN_test_Lem_in.sh
+```
+
+### Other method
 
 ```
 ./lem-in < map
