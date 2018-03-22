@@ -12,26 +12,22 @@
 
 #include "lem_in.h"
 
-static t_link	*get_path(t_lem *params)
+static t_link	*get_path(t_lem *params, int dist)
 {
 	t_node		*start;
-	t_node		*end;
 	t_link		*path;
 	t_link		*tmp;
-	int			dist;
 
 	start = fetch_node(params->graph, params->start);
-	end = fetch_node(params->graph, params->end);
-	params->opl = end->distance;
 	path = NULL;
-	path = enqueue(path, end, -1);
-	dist = params->opl;
+	path = enqueue(path, fetch_node(params->graph, params->end), -1);
 	while (dist != -1)
 	{
 		tmp = path->connection->edges;
 		while (tmp)
 		{
-			if (tmp->connection->distance == dist - 1 && tmp->connection->visited == 1)
+			if (tmp->connection->distance == dist - 1 \
+				&& tmp->connection->visited == 1)
 			{
 				path = enqueue(path, tmp->connection, -1);
 				break ;
@@ -75,13 +71,17 @@ static int		traverse_graph(t_lem *params)
 int				solver(t_lem *params, char *buf)
 {
 	t_link		*optimal_path;
+	t_node		*end;
 
 	if (!(traverse_graph(params) == 1))
 		return (0);
-	if ((optimal_path = get_path(params)))
+	end = fetch_node(params->graph, params->end);
+	params->opl = end->distance;
+	if ((optimal_path = get_path(params, params->opl)))
 	{
 		ft_printf("%s\n", buf);
-		print_result(optimal_path, fetch_node(params->graph, params->end)->distance, params);
+		print_result(optimal_path, \
+			fetch_node(params->graph, params->end)->distance, params);
 	}
 	return (1);
 }

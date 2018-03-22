@@ -6,41 +6,34 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 12:32:04 by vtennero          #+#    #+#             */
-/*   Updated: 2018/03/22 15:46:19 by vtennero         ###   ########.fr       */
+/*   Updated: 2018/03/22 16:41:00 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		is_valid_link(char *str, int dash, t_node *node)
+static int		is_valid_link(char *str, t_node *node, char *a, char *b)
 {
-	char		*room_one;
-	char		*room_two;
-	int			counter;
+	int			counter_a;
+	int			counter_b;
 	t_node		*tmp;
+	int			dash;
 
-	counter = 0;
-	room_one = ft_strndup(str, dash);
-	room_two = ft_strdup(str + dash + 1);
+	dash = ft_char_pos(str, '-');
+	counter_a = 0;
+	counter_b = 0;
 	tmp = node;
-	if (room_one && room_two)
+	if (ft_strcmp(a, b) == 0)
+		return (0);
+	while (tmp)
 	{
-		if (ft_strcmp(room_one, room_two) == 0)
-		{
-			free(room_one);
-			free(room_two);
-			return (0);
-		}
-		while (tmp)
-		{
-			if (ft_strcmp(tmp->name, room_one) == 0 || ft_strcmp(tmp->name, room_two) == 0)
-				counter++;
-			tmp = tmp->next;
-		}
+		if (ft_strcmp(tmp->name, a) == 0)
+			counter_a++;
+		if (ft_strcmp(tmp->name, b) == 0)
+			counter_b++;
+		tmp = tmp->next;
 	}
-	free(room_one);
-	free(room_two);
-	if (counter != 2)
+	if (counter_a != 1 || counter_b != 1)
 		return (0);
 	return (1);
 }
@@ -78,21 +71,31 @@ static int		assign_edge(t_node *node_a, t_node *node_b)
 	return (1);
 }
 
+static int		fetch_and_assign(t_lem *params, t_node **node, char *a, char *b)
+{
+	t_node		*node_a;
+	t_node		*node_b;
+
+	params->links += 1;
+	node_a = fetch_node(*node, a);
+	node_b = fetch_node(*node, b);
+	assign_edge(node_a, node_b);
+	assign_edge(node_b, node_a);
+	free(a);
+	free(b);
+	return (1);
+}
+
 int				set_link(char *line, t_lem *params, t_node **node)
 {
 	int			dash;
-	t_node		*node_a;
-	t_node		*node_b;
 	char		*room_one;
 	char		*room_two;
 
-	room_one = NULL;
-	room_two = NULL;
 	dash = ft_char_pos(line, '-');
-	if (dash == -1 || (is_valid_link(line, dash, *node) == 0) \
-			|| !params->end || !params->start || !params->rooms)
+	if (dash == -1 || \
+			!params->end || !params->start || !params->rooms)
 		return (0);
-	params->links += 1;
 	if (!(room_one = ft_strndup(line, dash)))
 		return (0);
 	if (!(room_two = ft_strdup(line + dash + 1)))
@@ -100,11 +103,11 @@ int				set_link(char *line, t_lem *params, t_node **node)
 		free(room_one);
 		return (0);
 	}
-	node_a = fetch_node(*node, room_one);
-	node_b = fetch_node(*node, room_two);
-	assign_edge(node_a, node_b);
-	assign_edge(node_b, node_a);
-	free(room_one);
-	free(room_two);
-	return (1);
+	if ((is_valid_link(line, *node, room_one, room_two) == 0))
+	{
+		free(room_one);
+		free(room_two);
+		return (0);
+	}
+	return (fetch_and_assign(params, node, room_one, room_two));
 }

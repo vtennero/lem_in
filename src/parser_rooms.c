@@ -6,16 +6,16 @@
 /*   By: vtennero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 12:34:26 by vtennero          #+#    #+#             */
-/*   Updated: 2018/03/15 12:34:27 by vtennero         ###   ########.fr       */
+/*   Updated: 2018/03/22 16:07:42 by vtennero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int	parse_coord(char *str, int len)
+static int		parse_coord(char *str, int len)
 {
-	int		i;
-	int		coord;
+	int			i;
+	int			coord;
 
 	i = 0;
 	coord = 0;
@@ -30,11 +30,11 @@ static int	parse_coord(char *str, int len)
 	return (coord);
 }
 
-static int	is_room(char *str, int *x, int *y)
+static int		is_room(char *str, int *x, int *y)
 {
-	int		i;
-	int		x_space;
-	int		y_space;
+	int			i;
+	int			x_space;
+	int			y_space;
 
 	i = 0;
 	x_space = ft_char_pos(str, ' ');
@@ -70,7 +70,26 @@ static int		is_duplicate_room(t_node *new, t_node *start)
 	return (0);
 }
 
-int			set_room(char *line, t_lem *params, int *mod, t_node **gr)
+static int		update_params(t_lem *params, int mod, t_node *new)
+{
+	int			result;
+
+	result = mod;
+	if (mod == 1 && params->start == NULL)
+	{
+		result = 3;
+		params->start = ft_strdup(new->name);
+	}
+	if (mod == 2 && params->end == NULL)
+	{
+		result = 3;
+		params->end = ft_strdup(new->name);
+	}
+	params->rooms += 1;
+	return (result);
+}
+
+int				set_room(char *line, t_lem *params, int *mod, t_node **gr)
 {
 	t_node		*new;
 	int			x;
@@ -80,21 +99,13 @@ int			set_room(char *line, t_lem *params, int *mod, t_node **gr)
 	if (is_room(line, &x, &y) && params->links == 0)
 	{
 		name = ft_strndup(line, ft_char_pos(line, ' '));
+		if (!name)
+			return (0);
 		new = create_node(x, y, name);
-		if (!name || is_duplicate_room(new, *gr))
+		if (is_duplicate_room(new, *gr))
 			return (0);
 		*gr = pushback_node(*gr, new);
-		if (*mod == 1 && params->start == NULL)
-		{
-			*mod = 3;
-			params->start = ft_strdup(new->name);
-		}
-		if (*mod == 2 && params->end == NULL)
-		{
-			*mod = 3;
-			params->end = ft_strdup(new->name);
-		}
-		params->rooms += 1;
+		*mod = update_params(params, *mod, new);
 		return (1);
 	}
 	*mod = 3;
