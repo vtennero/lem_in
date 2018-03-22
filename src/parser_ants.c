@@ -33,7 +33,6 @@ int			set_ant(t_lem *params)
 			i++;
 		}
 		free(line);
-		// ft_printf("i %d ants %d\n", i, params->ants);
 		return (1);
 	}
 	free(line);

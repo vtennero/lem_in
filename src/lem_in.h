@@ -31,6 +31,13 @@ typedef struct		s_node
 	struct s_point	coord;
 }					t_node;
 
+typedef struct		s_ant
+{
+	int				pos;
+	int				rank;
+	struct s_ant	*next;
+}					t_ant;
+
 typedef struct		s_link
 {
 	struct s_node	*connection;
@@ -49,26 +56,37 @@ typedef struct		s_lem
 }					t_lem;
 
 /*
- ** ------------------------- PARSER -------------------------
- */
+** ------------------------- PARSER -------------------------
+*/
 int					set_ant(t_lem *params);
 int					set_start(char *line, t_lem *params, int *mod);
 int					is_comment(char *line);
-int					set_room(char *line, t_lem *params, int *mod, t_node **graph);
+int					set_room(char *line, t_lem *params, int *mod, t_node **gr);
 int					set_end(char *line, t_lem *params, int *mod);
 int					set_link(char *line, t_lem *params, t_node **node);
 /*
- ** ------------------------- SOLVER -------------------------
- */
-int					solver(t_lem *params);
+** ------------------------- SOLVER -------------------------
+*/
+int					solver(t_lem *params, char *buf);
+void				print_result(t_link *path, int len, t_lem *params);
+void				free_params(t_lem *params);
 /*
- ** ------------------------- UTILITIES -------------------------
- */
+** ------------------------- GRAPH & ANTS -------------------------
+*/
 t_node				*create_node(int x, int y, char *name);
 t_node				*pushback_node(t_node *start, t_node *new);
 t_node				*free_node(t_node *node);
-void				print_nodes(t_lem *params);
-void				free_params(t_lem *params);
 t_node				*fetch_node(t_node *node, char *name);
+t_link				*enqueue(t_link *start, t_node *add, int dist);
+t_link				*dequeue(t_link *element);
+int					free_queue(t_link *queue);
+t_ant				*create_ant(int rank);
+t_ant				*pushback_ant(t_ant *start, t_ant *new);
+t_ant				*search_and_destroy(t_ant *ant_list);
+/*
+** ------------------------- UTILITIES -------------------------
+*/
+void				print_nodes(t_lem *params);
+void				print_optimal_path(t_link *path, int len);
 
 #endif

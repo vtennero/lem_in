@@ -2,8 +2,8 @@
 
 COLOR='\x1b[38;5;220m'
 END='\x1b[0m'
-n=129
-p=14
+n=135
+p=27
 
 source resources/general_tests.sh
 source resources/valgrind_lem_in.sh

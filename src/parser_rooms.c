@@ -70,21 +70,20 @@ static int		is_duplicate_room(t_node *new, t_node *start)
 	return (0);
 }
 
-int			set_room(char *line, t_lem *params, int *mod, t_node **graph)
+int			set_room(char *line, t_lem *params, int *mod, t_node **gr)
 {
 	t_node		*new;
 	int			x;
 	int			y;
 	char		*name;
 
-	new = NULL;
-	if (is_room(line, &x, &y))
+	if (is_room(line, &x, &y) && params->links == 0)
 	{
 		name = ft_strndup(line, ft_char_pos(line, ' '));
 		new = create_node(x, y, name);
-		if (!name || is_duplicate_room(new, *graph))
+		if (!name || is_duplicate_room(new, *gr))
 			return (0);
-		*graph = pushback_node(*graph, new);
+		*gr = pushback_node(*gr, new);
 		if (*mod == 1 && params->start == NULL)
 		{
 			*mod = 3;

@@ -19,13 +19,17 @@ FLAGS = -Wall -Werror -Wextra
 SANITIZE = -g3 -fsanitize=address
 
 SRC = main.c \
-		parser_links.c \
 		parser_ants.c \
 		parser_com.c \
+		parser_links.c \
 		parser_rooms.c \
-		graph_creator.c \
+		generator_graph.c \
+		generator_bfs_queue.c \
+		generator_ants.c \
 		free_for_all.c \
-		solver.c
+		solver.c \
+		printer.c \
+		utilities.c
 
 PSRC = $(addprefix src/, $(SRC))
 
@@ -36,9 +40,7 @@ all: $(NAME)
 $(NAME): src/lem_in.h
 	@ make -C libft/
 	@ gcc -c $(FLAGS) $(PSRC) -I src/
-	# @ gcc -g $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
 	@ gcc $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
-	# @ gcc $(FLAGS) $(SANITIZE) $(OBJ) libft/libft.a -o $(NAME)
 
 clean:
 	@ /bin/rm -f $(OBJ)
