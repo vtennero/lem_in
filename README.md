@@ -2,7 +2,7 @@
 
 The goal of this project is to find the quickest way to get n ants across a graph.
 
-To traverse the graphand find the shortest path, I used the breadth-first search method.
+To traverse the graph and find the shortest path, I used the breadth-first search method.
 
 ## Installing
 
